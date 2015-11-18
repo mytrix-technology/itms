@@ -1,0 +1,91 @@
+@extends(Config::get('adminlte::views.master'))
+
+@section('content')
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box box-primary">
+            <div class="box-body clearfix">
+                {{ Form::model($updateappss, array('route' => array('putUpdateApps', $updateappss->id), 'method' => 'PUT')) }}
+                    @if(Sentry::check())
+                    <div class="row-fluid">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                {{ Form::label('id_project', 'Application Project') }} (* <span class="error">{{ $errors->first('id_project') }}</span>
+                                {{ Form::select('id_project', array('default' => $updateappss->project1->name_project) + $projectNames, $updateappss->project_id, array('id' => 'id_project', 'class' => 'col-lg-12 form-control'))  }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('user_request', 'User Request') }} (* <span class="error">{{ $errors->first('user_request') }}</span>
+                                {{ Form::text('user_request', $updateappss->user_request, array('class' => 'col-lg-12 form-control')) }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Request Date</label> (*
+                                <p>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="span2 col-lg-6 form-control" value="{{ $updateappss->request_date }}" id="datetimepicker" data-format="yyyy-mm-dd hh:ii:ss" name="request_date" placeholder="click here"/>
+                                    </div><!-- /.input group -->
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('database_change', 'Change in Database') }} (* <span class="error">{{ $errors->first('database_change') }}</span>
+                                {{ Form::textarea('database_change', $updateappss->database_change, array('class' => 'col-lg-12 form-control')) }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('apps_change', 'Change in Application') }} (* <span class="error">{{ $errors->first('apps_change') }}</span>
+                                {{ Form::textarea('apps_change', $updateappss->apps_change, array('class' => 'col-lg-12 form-control')) }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('manual_book_file', 'Upload Manual Book') }} 
+                                {{ Form::file('fileManual') }}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                {{ Form::label('apps_version', 'Application Version') }} (* <span class="error">{{ $errors->first('apps_version') }}</span>
+                                {{ Form::text('apps_version', $updateappss->apps_version, array('class' => 'col-lg-12 form-control')) }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Update Date</label>
+                                <p>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="span2 col-lg-6 form-control" value="{{ $updateappss->update_date }}" id="datetimepicker1" data-format="yyyy-mm-dd hh:ii:ss" name="update_date" placeholder="click here"/>
+                                    </div><!-- /.input group -->
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('pic', 'PIC') }} (* <span class="error">{{ $errors->first('pic') }}</span>
+                                {{ Form::select('pic', array('default' => $updateappss->user->username) + $users, $updateappss->pic, array('id' => 'pic', 'class' => 'col-lg-12 form-control'))  }}
+                            </div>
+                            <div class="form-group required">
+                                {{ Form::label('filename_update', 'Filename Update', array('required' => 'required')) }} (* <span class="error">{{ $errors->first('filename_update') }}</span>
+                                {{ Form::textarea('filename_update', $updateappss->filename_update, array('class' => 'col-lg-12 form-control')) }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('remark', 'Remark') }} (* <span class="error">{{ $errors->first('remark') }}</span>
+                                {{ Form::textarea('remark', $updateappss->remark, array('class' => 'col-lg-12 form-control')) }}
+                            </div>
+                            <div class="form-group">
+                                {{ Form::hidden('user_updated', Sentry::getUser()->id, array('class' => 'col-lg-12 form-control')) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-lg-12">
+                            <div class="pull-right">
+                                {{ Form::submit('Submit', array('class' => 'btn btn-primary', 'style' => 'margin-top: 15px;')) }}
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                {{ Form::close() }}
+            </div>
+        </div>
+    </div>
+</div>
+@stop

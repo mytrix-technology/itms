@@ -1,0 +1,57 @@
+<table id="example" class="display responsive nowrap" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th class="col-lg-1 hidden-xs" style="text-align: center;">#</th>
+            <th class="col-lg-1">Group</th>
+            <th class="col-lg-1">Nama Status</th>
+            <th class="col-lg-1">Deskripsi Status</th>
+            <th class="col-lg-1">Activated</th>
+            <th class="col-lg-1 hidden-xs">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if ($masterstatuss->count()): ?>
+        <?php foreach ($masterstatuss as $masterstatus): ?>
+        
+        <tr>
+            <td class="hidden-xs" style="text-align: center;"></td>
+            <td>&nbsp;<?php echo $masterstatus->getGroup(); ?></td>
+            <td>&nbsp;<?php echo $masterstatus->getStatusName(); ?></td>
+            <td>&nbsp;<?php echo $masterstatus->getStatusDesc(); ?></td>
+            <td>&nbsp;
+                <?php if($masterstatus->getActivated() == 1): ?>
+                    <?php echo "Yes"; ?>
+                <?php else: ?>
+                    <?php echo "No"; ?>
+                <?php endif; ?>
+            </td>
+            <td class="visible-lg">
+                <!-- Edit Master Status -->
+                <?php if($masterstatus->getActivated() == 0): ?>
+                    <?php echo Form::open(array('method'=>'POST', 'route'=>array('activeMasterStatus', $masterstatus->getId()), 'class' => 'pull-left')); ?>
+                    <input type="image" name="detailBtn" id="detailBtn" title="Active" src="<?php echo asset("images/accept.png"); ?>" />
+                    <?php echo Form::close(); ?>&nbsp;
+
+                    <a class="btn btn-sm btn-info" href="<?php echo URL::route('showMasterStatus', $masterstatus->getId()); ?>">Edit</a>
+                    
+                <?php else: ?>
+                    <?php echo Form::open(array('method'=>'POST', 'route'=>array('nonactiveMasterStatus', $masterstatus->getId()), 'class' => 'pull-left')); ?>
+                    <input type="image" name="detailBtn" id="detailBtn" title="Non Active" src="<?php echo asset("images/cancel.png"); ?>" />
+                    <?php echo Form::close(); ?>
+                <?php endif; ?>
+
+            </td>
+            
+        </tr>
+        <?php endforeach; ?>
+        <?php else: ?>
+            <tr><td colspan="10" align="center">
+            No Record Found !!!
+            </td></tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+<div class="box-footer">
+
+</div>

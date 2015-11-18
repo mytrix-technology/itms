@@ -1,0 +1,21 @@
+
+<?php $__env->startSection('content'); ?>
+	<div class="row">
+		<?php if (Sentry::check()): ?>
+			<?php if($currentUser->hasAccess('view-task-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listTasks'); ?>"><img src="<?php echo asset("images/task-open.png"); ?>"></a>
+					<p>Task Open</p>
+				</div>
+			<?php endif; ?>
+			
+			<?php if($currentUser->hasAccess('view-task-list-close')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listTaskCloses'); ?>"><img src="<?php echo asset("images/task-close.png"); ?>"></a>
+					<p>Task Close</p>
+				</div>
+			<?php endif; ?>
+		<?php endif; ?>
+	</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make(Config::get('adminlte::views.master'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

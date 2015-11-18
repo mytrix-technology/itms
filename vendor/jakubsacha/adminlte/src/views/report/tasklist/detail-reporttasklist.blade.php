@@ -1,0 +1,1 @@
+detail-reporttasklist.blade

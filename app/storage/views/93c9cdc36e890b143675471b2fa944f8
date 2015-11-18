@@ -1,0 +1,42 @@
+
+<?php $__env->startSection('content'); ?>
+	<div class="row">
+		<?php if (Sentry::check()): ?>
+			<?php if($currentUser->hasAccess('view-masterapps-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listMasterAppss'); ?>"><img src="<?php echo asset("images/application.png"); ?>"></a>
+					<p>Master Application</p>
+				</div>
+			<?php endif; ?>
+			
+			<?php if($currentUser->hasAccess('view-mastermodul-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listMasterModuls'); ?>"><img src="<?php echo asset("images/modul.png"); ?>"></a>
+					<p>Master Modul</p>
+				</div>
+			<?php endif; ?>
+			
+			<?php if($currentUser->hasAccess('view-masterprojecttype-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listMasterProjectTypes'); ?>"><img src="<?php echo asset("images/project-type.jpg"); ?>"></a>
+					<p>Master Project Type</p>
+				</div>
+			<?php endif; ?>
+			
+			<?php if($currentUser->hasAccess('view-mastertasktype-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listMasterTaskTypes'); ?>"><img src="<?php echo asset("images/task-type.png"); ?>"></a>
+					<p>Master Task Type</p>
+				</div>
+			<?php endif; ?>
+			
+			<?php if($currentUser->hasAccess('view-masterstatus-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listMasterStatuss'); ?>"><img src="<?php echo asset("images/status.png"); ?>"></a>
+					<p>Master Status</p>
+				</div>
+			<?php endif; ?>
+		<?php endif; ?>
+	</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make(Config::get('adminlte::views.master'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

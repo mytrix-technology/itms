@@ -1,0 +1,74 @@
+
+<?php $__env->startSection('content'); ?>
+<script src="<?php echo asset('packages/mrjuliuss/syntara/assets/js/dashboard/user.js'); ?>"></script>
+
+<?php echo $__env->make('syntara::layouts.dashboard.confirmation-modal', array('title' => trans('syntara::all.confirm-delete-title'), 'content' => trans('syntara::all.confirm-delete-message'), 'type' => 'delete-user'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box box-warning collapsed-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Search</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                </div><!-- /.box-tools -->
+            </div>
+                <div class="box-body">
+                    <?php echo Form::open(array('url' => 'trainings')); ?>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <?php echo Form::label('projectNameSearch', 'Project Name'); ?>
+                                <?php echo Form::select('projectNameSearch', $projectNames, 'Choose Project', array('id' => 'projectNameSearch', 'class' => 'col-lg-12 form-control')); ?>
+                        </div>
+                        <div class="form-group">
+                            <?php echo Form::label('trainingTargetSearch', 'Training Target'); ?>
+                            <?php echo Form::text('trainingTargetSearch', null, array('id' => 'trainingTargetSearch', 'class' => 'col-lg-12 form-control')); ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <?php echo Form::label('trainingActualDateSearch', 'Training Actual Date'); ?>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="span2 col-lg-6 form-control" value id="datetimepicker" data-format="yyyy-mm-dd hh:ii:ss" name="trainingActualDateSearch" placeholder="click here"/>
+                                </div><!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <?php echo Form::label('trainerSearch', 'Trainer'); ?>
+                            <?php echo Form::select('trainerSearch', $users, 'Choose Trainer', array('id' => 'trainerSearch', 'class' => 'col-lg-12 form-control')); ?>
+                        </div>
+                    </div>
+                        <?php echo Form::submit('Search', array('class' => 'btn btn-primary', 'style' => 'margin-top: 15px;')); ?>
+                    <?php echo Form::close(); ?>
+                </div>
+            </div>
+        </div>
+    <div class="col-lg-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">List of Training</h3>
+                <div class="box-tools">
+                    <p class="pull-right">
+                        
+                    </p>
+                </div>
+            </div>
+            <div class="box-body  ajax-content no-padding">
+                <?php echo Notification::showAll(); ?>
+                
+                <?php if ($errors->any()): ?>
+                    <div class="alert alert-error">
+                        <?php echo implode('<br>', $errors->all()); ?>
+                    </div>
+                <?php endif; ?>
+                <?php echo $__env->make('adminlte::projectapps.training.list-training', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make(Config::get('adminlte::views.master'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

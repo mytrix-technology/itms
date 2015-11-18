@@ -1,0 +1,104 @@
+
+<?php $__env->startSection('content'); ?>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box box-primary">
+            <div class="box-body clearfix">
+                <?php echo Notification::showAll(); ?>
+                
+                <?php if ($errors->any()): ?>
+                    <div class="alert alert-error">
+                        <?php echo implode('<br>', $errors->all()); ?>
+                    </div>
+                <?php endif; ?>
+                <?php echo Form::model($projects, array('route' => array('putProject', $projects->id), 'method' => 'PUT', 'files' => true)); ?>
+                    <?php if(Sentry::check()): ?>
+                    <div class="row-fluid">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <?php echo Form::label('name_project', 'Project Name'); ?> (* <span class="error"><?php echo $errors->first('name_project'); ?></span>
+                                <?php echo Form::text('name_project', $projects->name_project, array('class' => 'col-lg-12 form-control')); ?>
+                            </div>
+                            <div class="form-group">
+                                <?php echo Form::label('desc_project', 'Project Description'); ?> (* <span class="error"><?php echo $errors->first('desc_project'); ?></span>
+                                <?php echo Form::textarea('desc_project', $projects->desc_project, array('class' => 'col-lg-12 form-control')); ?>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Due Date</label> (*
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="span2 col-lg-6 form-control" value='<?php echo $projects->due_date; ?>' id="datetimepicker" data-format="yyyy-mm-dd hh:ii:ss" name="datepicker" placeholder="click here"/>
+                                </div><!-- /.input group -->
+                            </div>
+                            <div class="form-group">
+                                <?php echo Form::label('status_project_request', 'Project Status'); ?> (* <span class="error"><?php echo $errors->first('status_project_request'); ?></span>
+                                <?php echo Form::select('status_project_request', array('default' => $projects->masterstatus->group.' - '.$projects->masterstatus->status_name) + $masterstatuss, $projects->status_project_request, array('id' => 'status_project_request', 'class' => 'col-lg-12 form-control',Input::old('status_project_request'))); ?>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <?php echo Form::label('master_type_project_id', 'Project Type Master'); ?> (* <span class="error"><?php echo $errors->first('master_type_project_id'); ?></span>
+                                <?php echo Form::select('master_type_project_id', array('default' => $projects->masterprojecttype->name_project_type) + $masterprojecttypes, $projects->master_type_project_id, array('id' => 'master_type_project_id', 'class' => 'col-lg-12 form-control',Input::old('master_type_project_id'))); ?>
+                            </div>
+                            <div class="form-group">
+                                <?php echo Form::label('reference', 'Reference Number'); ?> 
+                                <?php echo Form::text('reference', $projects->reference, array('id' => 'reference','class' => 'col-lg-12 form-control')); ?>
+                            </div>
+                            <div class="form-group">
+                                <?php echo Form::label('user_request', 'User Request'); ?> (* <span class="error"><?php echo $errors->first('user_request'); ?></span>
+                                <?php echo Form::text('user_request', $projects->user_request, array('class' => 'col-lg-12 form-control')); ?>
+                            </div>
+                            <div class="form-group">
+                                <?php echo Form::label('master_apps_id', 'Application Master'); ?> 
+                                <?php if($projects->master_apps_id == null): ?>
+                                    <?php echo Form::select('apps', $masterappss, 'Choose Application Master', array('id' => 'sApps', 'class' => 'col-lg-12 form-control')); ?>
+                                <?php else: ?>
+                                    <?php echo Form::select('apps', array('default' => $projects->masterapps->name_apps) + $masterappss, $projects->master_apps_id, array('id' => 'sApps', 'class' => 'col-lg-12 form-control')); ?>
+                                <?php endif; ?>
+                            </div>
+                            <div class="form-group">
+                                <?php echo Form::label('master_modul_id', 'Modul Master'); ?> 
+                                <?php if($projects->master_modul_id == null): ?>
+                                    <?php echo Form::select('modul', array(), null, array('id' => 'sModul', 'class' => 'col-lg-12 form-control')); ?>
+                                <?php else: ?>
+                                    <?php echo Form::select('modul', array('default' => $projects->mastermodul->name_modul) + $mastermoduls, $projects->master_modul_id, array('id' => 'sModul', 'class' => 'col-lg-12 form-control')); ?>
+                                <?php endif; ?>
+                            </div>
+                            <div class="form-group">
+                                <?php echo Form::label('doc_project_file', 'Project Documentation File'); ?> 
+                                <?php echo Form::file('fileDoc'); ?>
+                                <?php echo Form::hidden('doc_project_file', $projects->doc_project_file); ?>
+                            </div>
+                            <div class="form-group">
+                                <?php echo Form::hidden('user_updated', Sentry::getUser()->id, array('class' => 'col-lg-12 form-control')); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-lg-12">
+                            <div class="pull-right">
+                                <?php echo Form::submit('Submit', array('class' => 'btn btn-primary', 'style' => 'margin-top: 15px;')); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                <?php echo Form::close(); ?>
+				<script type="text/javascript">
+                    $(document).ready(function() {
+                        $('#sApps').on('change', function(){
+                            $.post('<?php echo URL::to('project/new'); ?>', {type: 'modul', id: $('#sApps').val()}, function(e){
+                                $('#sModul').html(e);
+                            });
+                        });
+                    });
+                    
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make(Config::get('adminlte::views.master'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

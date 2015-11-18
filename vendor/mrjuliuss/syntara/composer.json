@@ -1,0 +1,38 @@
+{
+    "name": "mrjuliuss/syntara",
+    "description": "Admin package for laravel 4",
+    "keywords": ["laravel","admin","sentry", "authentication", "user", "group", "permission"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MrJuliuss",
+            "email": "julien.richarte@gmail.com"
+        }
+    ],
+    "require":
+    {
+        "php": ">=5.3.0",
+        "illuminate/support": "~4.1",
+        "cartalyst/sentry": "2.1.*"
+    },
+    "require-dev": {
+        "illuminate/database": "~4.1",
+        "mockery/mockery": "0.9.0",
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/commands",
+            "src/controllers",
+            "src/helpers",
+            "src/migrations",
+            "src/models",
+            "src/services"
+        ],
+        "psr-0": {
+            "Mrjuliuss\\Syntara": "src/"
+        }
+    },
+
+    "minimum-stability": "dev"
+}

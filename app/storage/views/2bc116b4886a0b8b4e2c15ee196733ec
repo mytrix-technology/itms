@@ -1,0 +1,23 @@
+
+<?php $__env->startSection('content'); ?>
+<script src="<?php echo asset('packages/mrjuliuss/syntara/assets/js/dashboard/user.js'); ?>"></script>
+
+<div class="container" id="main-container">
+    <div class="row">
+        <div class="col-lg-12 offset3">
+            <section class="module">
+                <div class="module-head">
+                    <b><?php echo $title; ?></b>
+                </div>
+                <div class="module-body">
+                    <div class="alert alert-danger">
+                        <strong><?php echo $message; ?></strong>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make(Config::get('syntara::views.master'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

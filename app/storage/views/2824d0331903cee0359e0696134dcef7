@@ -1,0 +1,31 @@
+<table id="example" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="col-lg-1" style="text-align: center;">#</th>
+            <?php if($currentUser->hasAccess('permissions-management')): ?>
+            <th class="col-lg-1" style="text-align: center;"><input type="checkbox" class="check-all"></th>
+            <?php endif; ?>
+            <th class="col-lg-2"><?php echo trans('syntara::all.name'); ?></th>
+            <th class="col-lg-2"><?php echo trans('syntara::permissions.value'); ?></th>
+            <th><?php echo trans('syntara::permissions.description'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($permissions as $permission): ?>
+        <tr <?php if ($currentUser->hasAccess('permissions-management')): ?> onclick="location.href ='<?php echo URL::route('showPermission', $permission->getId()); ?>'" <?php endif; ?>>
+            <td style="text-align: center;"></td>
+            <?php if($currentUser->hasAccess('permissions-management')): ?>
+            <td style="text-align: center;">
+                <input type="checkbox" data-permission-id="<?php echo $permission->getId();; ?>">
+            </td>
+            <?php endif; ?>
+            <td>&nbsp;<?php echo $permission->getName(); ?></td>
+            <td>&nbsp;<?php echo $permission->getValue(); ?></td>
+            <td>&nbsp;<?php echo $permission->getDescription(); ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<div class="box-footer">
+    
+</div>

@@ -1,0 +1,6 @@
+<label><?php echo trans('syntara::users.registration'); ?> : </label> <?php echo $user->created_at; ?><br />
+<label><?php echo trans('syntara::users.last-update'); ?> : </label> <?php echo $user->updated_at; ?><br />
+<label><?php echo trans('syntara::users.last-login'); ?> : </label> <?php echo $user->last_login; ?><br />
+<label><?php echo trans('syntara::users.ip'); ?> : </label> <?php echo $throttle->ip_address; ?><br />
+<label><?php echo trans('syntara::users.banned-at'); ?> : </label> <?php echo isset($throttle->banned_at) ? $throttle->banned_at : 'none'; ?><br />
+<label>Suspended at : </label> <?php echo isset($throttle->suspended_at) ? $throttle->suspended_at : 'none'; ?><br />

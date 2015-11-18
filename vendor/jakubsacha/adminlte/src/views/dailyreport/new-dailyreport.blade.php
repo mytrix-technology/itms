@@ -1,0 +1,1 @@
+C:\wampstack\apache2\htdocs\reminder-pdt\app/views/new-dailyreport.blade.php

@@ -1,0 +1,60 @@
+<table id="example" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th rowspan="2" style="text-align: center;">#</th>
+            <th rowspan="2">Design Application Name</th>
+            <th rowspan="2">Requirement Testing</th>
+            <th rowspan="2">Testing Date</th>
+            <th colspan="2" style="text-align: center;">SIT</th>
+            <th colspan="2" style="text-align: center;">Updated</th>
+            <th rowspan="2">Action</th>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>User</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if ($testings->count()): ?>
+        <?php foreach ($testings as $testing): ?>
+        
+        <tr>
+            <td class="hidden-xs" style="text-align: center;"></td>
+            <td>&nbsp;<?php echo $testing->getNameApps(); ?></td>
+            <td>&nbsp;<?php echo $testing->getRequirementTesting(); ?></td>
+            <td>&nbsp;<?php echo $testing->getSitDate(); ?></td>
+            <td>&nbsp;<?php echo $testing->getSit(); ?></td>
+            <td>&nbsp;
+                <?php if($testing->status_sit != null): ?>
+                    <?php echo $testing->getSitStatus(); ?>
+                <?php endif; ?>
+            </td>
+            <td>&nbsp;
+                <?php if($testing->user_updated != null): ?>
+                    <?php echo $testing->getUserUpdated(); ?>
+                <?php endif; ?>
+            </td>
+            <td>&nbsp;<?php echo $testing->getUpdatedAt(); ?></td>
+            <td class="visible-lg">
+                <?php if($testing->status_sit == 'close'): ?>
+                    <?php echo "Testing is Closed"; ?>
+                <?php else: ?>
+                    <!-- Edit SIT -->
+                    <a class="fa fa-edit" href="<?php echo URL::route('showTesting', $testing->getId()); ?>" title="Edit"></a>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+        <?php else: ?>
+            <tr><td colspan="10" align="center">
+            Record Not Found!
+            </td></tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+<div class="box-footer">
+
+</div>

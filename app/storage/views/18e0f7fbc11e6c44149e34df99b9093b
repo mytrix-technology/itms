@@ -1,0 +1,58 @@
+<table id="example" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="col-lg-1 hidden-xs" style="text-align: center;">#</th>
+            <?php if($currentUser->hasAccess('delete-user')): ?>
+            <th class="col-lg-1" style="text-align: center;"><input type="checkbox" class="check-all"></th>
+            <?php endif; ?>
+            <th class="col-lg-1"><?php echo trans('syntara::users.username'); ?></th>
+            <th class="col-lg-2 visible-lg visible-xs"><?php echo trans('syntara::all.email'); ?></th>
+            <th class="col-lg-2 hidden-xs"><?php echo trans('syntara::users.groups'); ?></th>
+            <th class="col-lg-2 hidden-xs"><?php echo trans('syntara::users.permissions'); ?></th>
+            <th class="col-lg-1 visible-lg"><?php echo trans('syntara::all.name'); ?></th>
+            <th class="col-lg-1 hidden-xs"><?php echo trans('syntara::users.activated'); ?></th>
+            <?php if($currentUser->hasAccess('update-user-info')): ?>
+            <th class="col-lg-1 hidden-xs"><?php echo trans('syntara::users.banned'); ?></th>
+            <th class="col-lg-1 hidden-xs">Suspended</th>
+            <?php endif; ?>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!count($datas['users'])): ?>
+        <tr><td colspan="10">
+            No records found!
+            </td></tr>
+        <?php endif; ?>
+        <?php foreach ($datas['users'] as $user): ?>
+        <?php
+        $throttle = $throttle = Sentry::findThrottlerByUserId($user->getId());
+        ?>
+        <tr onclick="document.location='<?php echo URL::route('showUser', $user->getId()); ?>';">
+            <td class="hidden-xs" style="text-align: center;"></td>
+            <?php if($currentUser->hasAccess('delete-user')): ?>
+            <td style="text-align: center;">
+                <input type="checkbox" data-user-id="<?php echo $user->getId();; ?>">
+            </td>
+            <?php endif; ?>
+            <td >&nbsp;<?php echo $user->username; ?></td>
+            <td class="visible-xs visible-lg">&nbsp;<?php echo $user->getLogin(); ?></td>
+            <td class="hidden-xs">
+                <?php foreach($user->getGroups()->toArray() as $key => $group): ?>
+                <?php echo $group['name']; ?>,
+                <?php endforeach; ?>
+            </td>
+            <td class="hidden-xs"><?php echo json_encode($user->getPermissions()); ?></td>
+            <td class="visible-lg">&nbsp;<?php echo $user->last_name; ?> <?php echo $user->first_name; ?></td>
+            <td class="hidden-xs"><?php echo $user->isActivated() ? trans('syntara::all.yes') : '<a class="activate-user" href="#" data-toggle="tooltip" title="'.trans('syntara::users.activate').'">'.trans('syntara::all.no').'</a>'; ?></td>
+            <?php if($currentUser->hasAccess('update-user-info')): ?>
+            <td class="hidden-xs"><?php echo $throttle->isBanned() ? trans('syntara::all.yes') : trans('syntara::all.no'); ?></td>
+            <td class="hidden-xs"><?php echo $throttle->isSuspended() ? trans('syntara::all.yes') : trans('syntara::all.no'); ?></td>        
+            <?php endif; ?>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+<div class="box-footer">
+    <?php echo $datas['users']->links();; ?>
+</div>

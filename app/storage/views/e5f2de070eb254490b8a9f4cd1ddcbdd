@@ -1,0 +1,23 @@
+<label class="control-label"><?php echo trans('syntara::permissions.permissions'); ?></label>
+<div class="input-group">
+    <span class="input-group-addon"><span class="glyphicon glyphicon-plus-sign add-input"></span></span>
+    <select class="form-control permissions-select">
+        <?php foreach($permissions as $permission): ?>
+        <option value="permission[<?php echo $permission->getValue(); ?>]"><?php echo $permission->getName(); ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
+<br>
+<div class="input-container">
+<?php if(isset($ownPermissions) && !empty($ownPermissions)): ?>
+    <?php foreach($ownPermissions as $permission): ?>
+        <div class="form-group">
+            <p class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-minus-sign remove-input"></span></span>
+                <input readonly type="text" class="form-control" name="permission[<?php echo $permission->getValue(); ?>]" value="<?php echo $permission->getName(); ?>"/>
+            </p>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+</div>
+<br>

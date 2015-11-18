@@ -1,0 +1,42 @@
+
+<?php $__env->startSection('content'); ?>
+	<div class="row">
+		<?php if (Sentry::check()): ?>
+			<?php if($currentUser->hasAccess('view-project-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listProjects'); ?>"><img src="<?php echo asset("images/project.png"); ?>"></a>
+					<p>Request Project</p>
+				</div>
+			<?php endif; ?>
+			
+			<?php if($currentUser->hasAccess('view-assesment-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listAssesments'); ?>"><img src="<?php echo asset("images/users.png"); ?>"></a>
+					<p>Assesment</p>
+				</div>
+			<?php endif; ?>
+			
+			<?php if($currentUser->hasAccess('view-training-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listTrainings'); ?>"><img src="<?php echo asset("images/training.png"); ?>"></a>
+					<p>Training</p>
+				</div>
+			<?php endif; ?>
+			
+			<?php if($currentUser->hasAccess('view-uat-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listUats'); ?>"><img src="<?php echo asset("images/uat.png"); ?>"></a>
+					<p>User Accept Test</p>
+				</div>
+			<?php endif; ?>
+			
+			<?php if($currentUser->hasAccess('view-updateapps-list')): ?>
+				<div class="col-xs-6 col-lg-2" align="center">
+					<a href="<?php echo URL::route('listUpdateAppss'); ?>"><img src="<?php echo asset("images/apps-update.png"); ?>"></a>
+					<p>Application Update</p>
+				</div>
+			<?php endif; ?>
+		<?php endif; ?>
+	</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make(Config::get('adminlte::views.master'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
